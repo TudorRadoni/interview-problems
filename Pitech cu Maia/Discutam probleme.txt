@@ -1,0 +1,100 @@
+-------Circular-------
+Q: Ce conditie se verifica la un sir circular?
+m a i a m a i a
+
+dimCircular = 4;
+for (start, start + dimCircular)
+    print(a[i])
+
+A B C D E F
+
+
+------Palindrom-------
+Q: Cum aratam ca un array e palindrom?
+0 1 2 3 4
+K A Y A K
+
+len (mereu impar)
+
+start = 0;
+end = len - 1;
+for (int i = 0; i <= len/2; i++) {
+    if (a[start + i] != a[end - i])
+        return;
+}
+
+
+-------Aceleasi Subsiruri-------
+Q: Cum aratam ca doua siruri au aceleasi subsiruri?
+1. Verificam cazurile nasoale
+    1.1 "b" este subsir al lui "a"
+    1.2 "a" este subsir al lui "b"
+
+2. Verificam sa fie sirurile okay
+    2.1 "a" si "b" sa nu fie nule
+
+3. Alegem sirul cu lungime maxima (sau egala)
+
+4. Loop de la 2 -> len(sir_mic)
+    - Loop de la 0 pana la len(sir_mare)
+        - if subsir_mare(i) inclus in sir_mic -> am gasit
+
+for (int substrSize = 2; ...)
+    for (int i = 0; ...)
+        b.Contains(substring)
+
+
+-------Reverse Array-------
+Q: Cum dam reverse la un array?
+// metoda Maia
+if (a == NULL) return;
+int i = 0;
+while (i <= len / 2) {
+    int swap = a[i];
+    a[i] = a[final - i];
+    a[final - i] = swap;
+
+    // switch(a[i], a[final - i]);
+    i++;
+}
+// metoda Wefty (aia naspa)
+for (i = 0; i < len; i++) {
+    newArr[i] = arr[final - i];
+}
+
+
+-------Find numbers in string-------
+Maiaeste456frumo99
+
+int k = 0;
+for (int i = 0; i < len; i++) {
+    ch = a[i];
+    if (ch >= 0 && ch <= 9) {
+        inturi[k] = ch;
+        k++;
+    }
+}
+inturi = {4, 5, 6, 99, 9, 9 };
+
+
+-------Occurences of x-------
+bool done = false;
+bool found = false;
+for (int i = 0; (i < len && !done); i++) {
+    if (a[i] == x) {
+        cnt++;
+        found = true;
+    }
+    else {
+        if (found)
+            done = true;
+    }
+}
+return cnt
+
+
+-------Frequency vector-------
+ init: { 5, 9, 8, 6, 1, 2, 3, 4, 6, 4, 6, 2 }
+ temp: { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+ freq: { 0, 1, 2, 1, 2, 1, 3, 0, 1, 1 }
+temp2: { 0, 1, 3, 4, 6, 7,10,10,11,12 }
