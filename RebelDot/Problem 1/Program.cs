@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Resources;
 using System.Xml;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Problem_1
 {
@@ -75,7 +77,8 @@ namespace Problem_1
         static void Main(string[] args)
         {
             Console.WriteLine("-> CSV:");
-            FileIOHandler testCSV = new FileIOHandler(@"C:\Users\tudor\Desktop\test.csv", "csv");
+            string path = @"C:\Stuff\Projects\Interviuri si probleme\interview - problems\RebelDot\Problem 1\resources\test.csv";
+            FileIOHandler testCSV = new FileIOHandler(path, "csv");
             List<string> lines = testCSV.Read();
             foreach (string line in lines)
             {
@@ -83,8 +86,10 @@ namespace Problem_1
             }
 
             Console.WriteLine("\n-> XML:");
-            FileIOHandler testXML = new FileIOHandler(@"C:\Users\tudor\Desktop\test.xml", "xml");
+            path = @"C:\Stuff\Projects\Interviuri si probleme\interview - problems\RebelDot\Problem 1\resources\test.xml";
+            FileIOHandler testXML = new FileIOHandler(path, "xml");
             testXML.Read();
         }
     }
 }
+;
