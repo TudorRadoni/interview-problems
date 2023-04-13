@@ -1,0 +1,40 @@
+# This is what a commented-out line looks like.
+
+Available machines:
+1. Machine One
+2. Machine Two
+3. Machine Three
+4. Machine Four
+
+Machine features:
+1:  - Capacity: one part at a time
+    - Cooldown time: none
+
+2:  - Capacity: one part at a time
+    - Cooldown time: none
+
+3:  - Capacity: one part at a time
+    - Cooldown time: none
+
+4:  - Capacity: one part at a time
+    - Cooldown time: 600 seconds after each part
+
+Part list:
+1. Door knob - 1 item
+2. Pen - 2 items
+# The two pens don't necessarily need to be processed one after the other, you may spread them out across the production schedule.
+3. Keyboard frame - 1 item
+
+Part operations:
+1:  - Machine One: 150 seconds
+    - Machine Two: 1200 seconds
+    - Machine Four: 100 seconds
+
+2:  - Machine One: 50 seconds
+    - Machine Two: 2000 seconds
+    - Machine Three: 1200 seconds
+    - Machine Four: 200 seconds
+
+3:  - Machine One: 200 seconds
+    - Machine Three: 12000 seconds
+    - Machine Four: 600 seconds

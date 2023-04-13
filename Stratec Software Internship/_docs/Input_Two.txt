@@ -1,0 +1,54 @@
+Available machines:
+1. Band saw
+2. Lathe
+3. Knee Mill
+4. Part washer
+5. Dual-spindle machining center
+6. Rotary tumbler
+
+Machine features:
+1:  - Capacity: one part at a time
+    - Cooldown time: none
+
+2:  - Capacity: one part at a time
+    - Cooldown time: none
+
+3:  - Capacity: one part at a time
+    - Cooldown time: none
+
+4:  - Capacity: one part at a time
+    - Cooldown time: 600 seconds after each part
+
+5:  - Capacity: two parts at a time
+    - Cooldown time: none
+
+6:  - Capacity: no limit
+    - Cooldown time: none
+
+Part list:
+1. Door knob - 6 items
+2. Pen - 12 items
+3. Keyboard frame - 1 item
+4. Intake manifold - 4 items
+
+Part operations:
+1:  - Band saw: 150 seconds
+    - Lathe: 1200 seconds
+    - Part washer: 100 seconds
+
+2:  - Band saw: 50 seconds
+    - Lathe: 2000 seconds
+    - Knee Milll: 1200 seconds
+    - Rotary tumbler: 600 seconds
+    - Part washer: 200 seconds
+
+3:  - Band saw: 200 seconds
+    - Dual-spindle machining center: 8000 seconds
+    - Rotary tumbler: 600 seconds
+    - Parts washer: 600 seconds
+
+4:  - Band saw: 2000 seconds
+    - Knee mill: 4000 seconds
+    - Dual-spindle machining center: 30000 seconds
+    - Rotary tumber: 3500 seconds
+    - Part washer: 1200 seconds
