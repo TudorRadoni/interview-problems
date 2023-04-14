@@ -35,11 +35,11 @@ namespace test
     // Class used to store information about a machine
     class Machine
     {
-        public int id;
-        public string name;
+        int id;
+        string name;
 
-        public int capacity;
-        public int cooldownTime;
+        int capacity;
+        int cooldownTime;
 
         public Machine(ParseResult pr)
         {
@@ -54,11 +54,29 @@ namespace test
             this.cooldownTime = cooldownTime;
         }
 
+        //Getters
+        public int GetID()
+        {
+            return id;
+        }
+        public string GetName()
+        {
+            return name;
+        }
+        public int GetCapacity()
+        {
+            return capacity;
+        }
+        public int GetCooldownTime()
+        {
+            return cooldownTime;
+        }
+
+        // Setters
         public void SetCapacity(int capacity)
         {
             this.capacity = capacity;
         }
-
         public void SetCooldownTime(int cooldownTime)
         {
             this.cooldownTime = cooldownTime;
@@ -70,6 +88,7 @@ namespace test
         static void Main(string[] args)
         {
             string path = @"C:\Stuff\Projects\Interviuri si probleme\interview-problems\Stratec Software Internship\_docs\Input_One.txt";
+
             ReadAndParseFile(path);
         }
 
@@ -98,8 +117,8 @@ namespace test
                             // Set current section
                             currentSection = GetSectionType(pr.text);
 
-                            Console.WriteLine();
-                            Console.WriteLine(pr.text);
+                            //Console.WriteLine();
+                            //Console.WriteLine(pr.text);
                             break;
 
                         case LineType.Item:
@@ -109,29 +128,29 @@ namespace test
                             }
                             // TODO: Add part list
 
-                            Console.WriteLine(pr.text);
+                            //Console.WriteLine(pr.text);
                             break;
 
                         case LineType.ListItem:
+                            // Handle index
                             if (pr.id != 0)
                             {
                                 previousIndex = pr.id;
                             }
                             else pr.id = previousIndex;
 
-                            if (currentSection == SectionType.Machines)
+                            // Parse and add the list item to the correct section.
+                            if (currentSection == SectionType.Features)
                             {
-                                int capacity = ParseSpecs(pr.text);
-                                machines[pr.id].SetCapacity(capacity);
+                                int idx = pr.id - 1; // Since pr.id always starts from 1
+                                (string, int) SpecResult = ParseSpecs(pr.text);
+
+                                if (SpecResult.Item1 == "Capacity")
+                                    machines[idx].SetCapacity(SpecResult.Item2);
+
+                                if (SpecResult.Item1 == "Cooldown time")
+                                    machines[idx].SetCooldownTime(SpecResult.Item2);
                             }
-
-                            Console.WriteLine("-------");
-                            Console.WriteLine(machines[pr.id].id);
-                            Console.WriteLine(machines[pr.id].name);
-                            Console.WriteLine(machines[pr.id].capacity);
-                            Console.WriteLine("-------");
-
-                            Console.WriteLine(previousIndex.ToString() + " -> " + pr.text);
                             break;
 
                         case LineType.Unknown:
@@ -142,36 +161,69 @@ namespace test
                             break;
                     }
                 }
+
+                for (int i = 0; i < machines.Count; i++)
+                {
+                    Console.WriteLine("Name: {0}\nCapacity: {1}\nCooldown Time:{2}\n",
+                        machines[i].GetName(),
+                        machines[i].GetCapacity(),
+                        machines[i].GetCooldownTime());
+                }
             }
         }
 
-        // Function to parse specifications
-        static int ParseSpecs(string line)
+        static int strToInt(string str)
         {
             // Build dictionary to get capacity as an integer
-            Dictionary<string, int> strToInt = new Dictionary<string, int>();
-            strToInt.Add("one", 1);
-            strToInt.Add("two", 2);
-            strToInt.Add("three", 3);
-            strToInt.Add("four", 4);
-            strToInt.Add("five", 5);
-            strToInt.Add("six", 6);
-            strToInt.Add("seven", 7);
-            strToInt.Add("eight", 8);
-            strToInt.Add("nine", 9);
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            dict.Add("one", 1);
+            dict.Add("two", 2);
+            dict.Add("three", 3);
+            dict.Add("four", 4);
+            dict.Add("five", 5);
+            dict.Add("six", 6);
+            dict.Add("seven", 7);
+            dict.Add("eight", 8);
+            dict.Add("nine", 9);
 
-            if (line.StartsWith("Capacity"))
+            if (dict.ContainsKey(str))
             {
-                string[] parts = line.Split(' ');
-                string number = parts[1];
-
-                if (strToInt.ContainsKey(number))
-                {
-                    return strToInt[number];
-                }
-                return -1;
+                return dict[str];
             }
             else return -1;
+        }
+
+        // Function to parse specifications
+        static (string, int) ParseSpecs(string line)
+        {
+            string spec = "unknown";
+            int number = -1;
+
+            // Handle capacity
+            if (line.StartsWith("Capacity"))
+            {
+                spec = "Capacity";
+                string[] parts = line.Split(' ');
+                number = strToInt(parts[1]);
+            }
+
+            // Handle cooldown time
+            if (line.StartsWith("Cooldown time"))
+            {
+                spec = "Cooldown time";
+                string[] parts = line.Split(' ');
+                if (parts[2] == "none")
+                {
+                    number = 0;
+                }
+                else
+                {
+                    int.TryParse(parts[2], out number);
+                }
+            }
+
+            Console.WriteLine(number);
+            return (spec, number);
         }
 
         static SectionType GetSectionType(string name)
