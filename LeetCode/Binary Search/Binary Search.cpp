@@ -11,17 +11,17 @@ int main()
 
 	int start = len / 2;
 	int end = len;
-	for (int i = start; i < end; i++)
+	for (int idx = start; idx < end; i++)
 	{
-		if (target < nums[i]) {
-			end = i;
+		if (target < nums[idx]) {
+			end = idx; 
 		}
-		else if (target > nums[i]) {
-			start = i;
+		else if (target > nums[idx]) {
+			start = idx;
 		}
-		else if (target == nums[i]) {
-			std::cout << i;
-			return i;
+		else if (target == nums[idx]) {
+			std::cout << idx;
+			return idx;
 		}
 	}
 }
