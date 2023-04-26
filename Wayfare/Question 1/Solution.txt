@@ -1,0 +1,15 @@
+Using the given code, a function is implemented to search for and delete nodes in a linked list with the specified value (number). With a pointer to the next and previous nodes and an integer value, the structure defines the node structure of the linked list.
+In this program, the first thing the code checks is whether the list is empty (a = NULL), and if it is, then it returns the empty list. A while loop is then used to iterate through the linked list, checking if the current node matches the target number. Deleted nodes are bypassed by updating the next and previous pointers of adjacent nodes, and then updated pointers are cleared. Whenever a node reaches the end of the list, the code moves onto the next one.
+
+Outputs (for the example input):
+a: 3, 5, 7, 9, 10, 3, 20, 5, 3, 4
+number: 3
+output: 5, 7, 9, 10, 20, 5, 4
+
+a: 3, 7, 9, 10, 3, 20, 3, 4
+number: 5
+output: 3, 7, 9, 10, 3, 20, 3, 4
+
+a: 3, 5, 7, 9, 10, 3, 20, 5, 3, 4
+number: 0
+output: 3, 5, 7, 9, 10, 3, 20, 5, 3, 4
