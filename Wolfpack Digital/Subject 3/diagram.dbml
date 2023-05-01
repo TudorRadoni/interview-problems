@@ -1,0 +1,36 @@
+TABLE Product {
+  productID integer
+  name varchar
+  description varchar
+  price decimal
+  quantityInStock integer
+}
+
+TABLE Customer {
+  customerID integer
+  username varchar
+  email varchar
+  password varchar
+}
+
+TABLE Orders {
+  orderID integer
+  customerID integer
+  productID integer
+  quantity integer
+  totalPrice decimal
+}
+
+TABLE Addresses {
+  addressID integer
+  customerID integer
+  city varchar
+  street varchar
+  postalCode varchar
+}
+
+Ref: Orders.customerID > Customer.customerID
+
+Ref: Orders.productID > Product.productID
+
+Ref: Addresses.customerID > Customer.customerID
