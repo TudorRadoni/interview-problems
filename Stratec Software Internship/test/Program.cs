@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Specialized;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Security;
@@ -8,14 +9,8 @@ using System.Text.RegularExpressions;
 namespace test
 {
     // Helpers for parsing
-    enum LineType
-    {
-        Empty, Comment, Section, Item, ListItem, Unknown
-    }
-    enum SectionType
-    {
-        None, Machines, Features, Parts, PartOperations, Unknown
-    }
+    enum LineType { Empty, Comment, Section, Item, ListItem, Unknown }
+    enum SectionType { None, Machines, Features, Parts, PartOperations, Unknown }
 
     // Class used to store information about a parsed line
     class ParseResult
@@ -35,11 +30,11 @@ namespace test
     // Class used to store information about a machine
     class Machine
     {
-        int id;
-        string name;
+        public int id { get; }
+        public string name { get; }
 
-        int capacity;
-        int cooldownTime;
+        public int capacity { get; set; }
+        public int cooldownTime { get; set; }
 
         public Machine(ParseResult pr)
         {
@@ -51,34 +46,6 @@ namespace test
             this.id = pr.id;
             this.name = pr.text;
             this.capacity = capacity;
-            this.cooldownTime = cooldownTime;
-        }
-
-        //Getters
-        public int GetID()
-        {
-            return id;
-        }
-        public string GetName()
-        {
-            return name;
-        }
-        public int GetCapacity()
-        {
-            return capacity;
-        }
-        public int GetCooldownTime()
-        {
-            return cooldownTime;
-        }
-
-        // Setters
-        public void SetCapacity(int capacity)
-        {
-            this.capacity = capacity;
-        }
-        public void SetCooldownTime(int cooldownTime)
-        {
             this.cooldownTime = cooldownTime;
         }
     }
@@ -133,23 +100,20 @@ namespace test
 
                         case LineType.ListItem:
                             // Handle index
-                            if (pr.id != 0)
-                            {
-                                previousIndex = pr.id;
-                            }
+                            if (pr.id != 0) previousIndex = pr.id;
                             else pr.id = previousIndex;
 
-                            // Parse and add the list item to the correct section.
+                            // Parse and add the list item to the correct section
                             if (currentSection == SectionType.Features)
                             {
-                                int idx = pr.id - 1; // Since pr.id always starts from 1
+                                int idx = pr.id - 1; // Since pr.id always starts from 1 in the file
                                 (string, int) SpecResult = ParseSpecs(pr.text);
 
                                 if (SpecResult.Item1 == "Capacity")
-                                    machines[idx].SetCapacity(SpecResult.Item2);
+                                    machines[idx].capacity = SpecResult.Item2;
 
                                 if (SpecResult.Item1 == "Cooldown time")
-                                    machines[idx].SetCooldownTime(SpecResult.Item2);
+                                    machines[idx].cooldownTime = SpecResult.Item2;
                             }
                             break;
 
@@ -162,12 +126,13 @@ namespace test
                     }
                 }
 
-                for (int i = 0; i < machines.Count; i++)
+                // Print
+                foreach (Machine machine in machines)
                 {
                     Console.WriteLine("Name: {0}\nCapacity: {1}\nCooldown Time:{2}\n",
-                        machines[i].GetName(),
-                        machines[i].GetCapacity(),
-                        machines[i].GetCooldownTime());
+                        machine.name,
+                        machine.capacity,
+                        machine.cooldownTime);
                 }
             }
         }
@@ -186,10 +151,7 @@ namespace test
             dict.Add("eight", 8);
             dict.Add("nine", 9);
 
-            if (dict.ContainsKey(str))
-            {
-                return dict[str];
-            }
+            if (dict.ContainsKey(str)) return dict[str];
             else return -1;
         }
 
@@ -212,17 +174,11 @@ namespace test
             {
                 spec = "Cooldown time";
                 string[] parts = line.Split(' ');
-                if (parts[2] == "none")
-                {
-                    number = 0;
-                }
-                else
-                {
-                    int.TryParse(parts[2], out number);
-                }
+
+                if (parts[2] == "none") number = 0;
+                else int.TryParse(parts[2], out number);
             }
 
-            Console.WriteLine(number);
             return (spec, number);
         }
 
